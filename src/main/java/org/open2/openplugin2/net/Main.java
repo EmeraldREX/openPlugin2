@@ -1,19 +1,10 @@
 package org.open2.openplugin2.net;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.NotNull;
-import org.open2.openplugin2.blueprint.*;
-import org.open2.openplugin2.command.*;
-import org.open2.openplugin2.command.bet.*;
-import org.open2.openplugin2.config.Config;
+
 import org.open2.openplugin2.event.*;
 import org.open2.openplugin2.pve.PVEmain;
-import org.open2.openplugin2.net.Setup;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,8 +14,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.open2.openplugin2.race.Race;
 
-import java.util.Objects;
-import java.util.UUID;
 
 public class Main extends JavaPlugin {
     public static Main m;
@@ -42,7 +31,7 @@ public class Main extends JavaPlugin {
             p.sendMessage(ChatColor.GREEN + "リロード完了");
         new Scale(this);
         setup = new Setup(this); // Setupクラスの初期化
-        new Setting(m);
+
         getServer().getPluginManager().registerEvents(new Race(this),this);
             getServer().getPluginManager().registerEvents(new Recipi(this),this);
         new BoostMinecart(this, this.getConfig());

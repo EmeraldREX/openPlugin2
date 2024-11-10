@@ -1,0 +1,231 @@
+name: openPlugin2
+version: '${2}'
+main: org.open2.openplugin2.net.Main
+api-version: '1.21'
+commands:
+  opspawnset:
+    description: opspawnset
+    permission: openPlugin2.commands.opspawnset
+    permission-message: "you don't have any permissions!"
+  open2ch:
+    description: open2ch
+    permission: open2ch.commands.open2ch
+    permission-message: "you don't have any permissions!"
+  setumei:
+    description: setumei
+    permission: openPlugin2.setumei.command
+    permission-message: "you don't have any permissions!"
+  setting:
+    description: setting
+    permission: openPlugin2.setting.command
+    permission-message: "you don't have any permissions!"
+  entry:
+    description: entry
+    permission: openPlugin2.entry.command
+    permission-message: "you don't have any permissions!"
+  bet:
+    description: bet
+    permission: openPlugin2.bet.command
+    permission-message: "you don't have any permissions!"
+  goal:
+    description: goal
+    permission: openPlugin2.goal.command
+    permission-message: "you don't have any permissions!"
+  haihu:
+    description: haihu
+    permission: openPlugin2.haihu.command
+    permission-message: "you don't have any permissions!"
+  boost:
+    description: boost
+    permission: openPlugin2.boost.command
+    permission-message: "you don't have any permissions!"
+  pvecenter:
+    description: pvpcenter
+    permission: openPlugin2.pvpcenter.command
+    permission-message: "you don't have any permissions!"
+  pvestart:
+    description: pvestart
+    permission: openPlugin2.pvestart.command
+    permission-message: "you don't have any permissions!"
+  quiz:
+    description: quiz
+    permission: openPlugin2.quiz.command
+    permission-message: "you don't have any permissions!"
+  soundp:
+    description: soundp
+    permission: openPlugin2.soundp.command
+    permission-message: "you don't have any permissions!"
+  countdown:
+    description: countdown
+    permission: openPlugin2.countdown.command
+    permission-message: "you don't have any permissions!"
+  copybuildings:
+    description: copybuildings
+    permission: openPlugin2.copybuildings.command
+    permission-message: "you don't have any permissions!"
+  topentities:
+    description: topentities
+    permission: openPlugin2.topentities.command
+    permission-message: "you don't have any permissions!"
+  tag:
+    description: tag
+    permission: openPlugin2.tag.command
+    permission-message: "you don't have any permissions!"
+  yakiu:
+    description: topentities
+    permission: openPlugin2.yakiu.command
+    permission-message: "you don't have any permissions!"
+  c:
+    description: c
+    permission: openPlugin2.c.command
+    permission-message: "you don't have any permissions!"
+  pipis:
+    description: pipis
+    permission: openPlugin2.pipis.command
+    permission-message: "you don't have any permissions!"
+  freeze:
+    description: freeze
+    permission: openPlugin2.freeze.command
+    permission-message: "you don't have any permissions!"
+  mcgame:
+    description: mcgame
+    permission: openPlugin2.mcgame.command
+    permission-message: "you don't have any permissions!"
+  wanchat:
+    description: wanchat
+    permission: openPlugin2.wanchat.command
+    permission-message: "you don't have any permissions!"
+  dd:
+    description: dd
+    permission: openPlugin2.dd.command
+    permission-message: "you don't have any permissions!"
+  firework:
+    description: firework
+    permission: openPlugin2.firework.command
+    permission-message: "you don't have any permissions!"
+  scale:
+    description: scale
+    permission: openPlugin2.scale.command
+    permission-message: "you don't have any permissions!"
+
+permissions:
+  opspawnset.*:
+    children:
+      openPlugin2.commands.opspawnset: true
+    description: open permission description
+    default: op
+  setumei.*:
+    children:
+      openPlugin2.setumei.command: true
+    description: open permission description
+    default: true
+  setting.*:
+    children:
+      openPlugin2.setting.command: true
+    description: open permission description
+    default: true
+  entry.*:
+    children:
+      openPlugin2.entry.command: true
+    description: open permission description
+    default: op
+  bet.*:
+    children:
+      openPlugin2.bet.command: true
+    description: open permission description
+    default: true
+  haihu.*:
+    children:
+      openPlugin2.haihu.command: true
+    description: open permission description
+    default: op
+  boost.*:
+    children:
+      openPlugin2.boost.command: true
+    description: open permission description
+    default: op
+  pvecenter.*:
+    children:
+      openPlugin2.pvecenter.command: true
+    description: open permission description
+    default: op
+  pvestart.*:
+    children:
+      openPlugin2.pvestart.command: true
+    description: open permission description
+    default: op
+  quiz.*:
+    children:
+      openPlugin2.quiz.command: true
+    description: open permission description
+    default: true
+  soundp.*:
+    children:
+      openPlugin2.soundp.command: true
+    description: open permission description
+    default: op
+  countdown.*:
+    children:
+      openPlugin2.countdown.command: true
+    description: open permission description
+    default: op
+  copybuildings.*:
+    children:
+      openPlugin2.copybuildings.command: true
+    description: open permission description
+    default: op
+  topentities.*:
+    children:
+      openPlugin2.topentities.command: true
+    description: open permission description
+    default: true
+  tag.*:
+    children:
+      openPlugin2.tag.command: true
+    description: open permission description
+    default: true
+  yakiu.*:
+    children:
+      openPlugin2.itemname.yakiu: true
+    description: open permission description
+    default: op
+  c.*:
+    children:
+      openPlugin2.c.command: true
+    description: open permission description
+    default: true
+  pipis.*:
+    children:
+      openPlugin2.itemname.pipis: true
+    description: open permission description
+    default: op
+  freeze.*:
+    children:
+      openPlugin2.freeze.command: true
+    description: open permission description
+    default: op
+  mcgame.*:
+    children:
+      openPlugin2.mcgame.command: true
+    description: open permission description
+    default: true
+  wanchat.*:
+    children:
+      openPlugin2.wanchat.command: true
+    description: open permission description
+    default: true
+  dd.*:
+    children:
+      openPlugin2.dd.command: true
+    description: open permission description
+    default: op
+  firework.*:
+    children:
+      openPlugin2.firework.command: true
+    description: open permission description
+    default: true
+  scale.*:
+    children:
+      openPlugin2.scale.command: true
+    description: open permission description
+    default: true

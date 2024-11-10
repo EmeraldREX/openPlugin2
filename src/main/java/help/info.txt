@@ -1,0 +1,5 @@
+§3・おーぷん　説明
+§6/setumei chest   §rチェスト説明
+§6/setumei setting §r設定変更
+
+§6/setumei history §r更新履歴

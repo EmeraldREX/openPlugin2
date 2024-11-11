@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package org.open2.openplugin2.command.bet;
 
 import net.md_5.bungee.api.ChatColor;
@@ -20,18 +15,17 @@ public class Bet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!this.betinfo.toggle) {
-            sender.sendMessage(this.betinfo.prefix + ChatColor.RED + "現在はできません");
+            sender.sendMessage(String.valueOf(this.betinfo.prefix) + ChatColor.RED + "現在は出来ません");
             return true;
-        } else if (this.betinfo.playerlist.size() == 0) {
-            sender.sendMessage(this.betinfo.prefix + ChatColor.RED + "準備ができていません");
-            return true;
-        } else {
-            if (sender instanceof Player) {
-                Player player = (Player)sender;
-                player.openInventory(this.betinfo.inv);
-            }
-
-            return false;
         }
+        if (this.betinfo.playerlist.size() == 0) {
+            sender.sendMessage(String.valueOf(this.betinfo.prefix) + ChatColor.RED + "準備ができていません");
+            return true;
+        }
+        if (sender instanceof Player) {
+            Player player = (Player)sender;
+            player.openInventory(this.betinfo.inv);
+        }
+        return false;
     }
 }

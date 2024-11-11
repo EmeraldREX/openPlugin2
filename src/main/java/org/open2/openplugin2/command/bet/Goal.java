@@ -1,10 +1,10 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package org.open2.openplugin2.command.bet;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,8 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.*;
 
 public class Goal implements CommandExecutor {
     Betinfo betinfo;
@@ -28,141 +26,86 @@ public class Goal implements CommandExecutor {
             String name = args[0];
             Player winner = Bukkit.getPlayer(name);
             if (winner != null) {
-                double odds = (double)(1 + this.odds(winner.getUniqueId()) * 1);
-                String message = "";
+                double odds = 1 + odds(winner.getUniqueId());
                 int count = 1;
-                String[] var14 = args;
-                int var13 = args.length;
 
-                for(int var12 = 0; var12 < var13; ++var12) {
-                    String s = var14[var12];
+                StringBuilder message = new StringBuilder();
+                for (String s : args) {
                     Player pl = Bukkit.getPlayer(s);
-                    if (pl == null) {
-                        sender.sendMessage(this.betinfo.prefix + ChatColor.RED + "エラー　存在しない　プレイヤー");
+                    if (pl != null) {
+                        message.append(count).append("位").append(s).append(" ");
+                        count++;
+                    } else {
+                        sender.sendMessage(this.betinfo.prefix + ChatColor.RED + "エラー 存在しないプレイヤー");
                         return true;
                     }
-
-                    message = message + count + "位" + s + " ";
-                    if (count == 1) {
-                        message = message + ChatColor.WHITE;
-                    }
-
-                    ++count;
                 }
-
-                Iterator var23 = this.betinfo.bets.entrySet().iterator();
-
-                while(true) {
-                    label104:
-                    while(true) {
-                        Map.Entry entry;
-                        BetPlayer betPlayer;
-                        do {
-                            if (!var23.hasNext()) {
-                                Bukkit.broadcastMessage(this.betinfo.prefix + ChatColor.GOLD + message + "倍率 " + odds);
-                                this.betinfo.reset();
-                                return true;
-                            }
-
-                            entry = (Map.Entry)var23.next();
-                            betPlayer = (BetPlayer)entry.getValue();
-                        } while(!betPlayer.betto.equals(winner.getUniqueId()));
-
+                for (Map.Entry<UUID, BetPlayer> entry : this.betinfo.bets.entrySet()) {
+                    BetPlayer betPlayer = entry.getValue();
+                    if (betPlayer.betto.equals(winner.getUniqueId())) {
                         ItemStack[] items = betPlayer.inv.getContents();
-                        Map<Material, Integer> map = new HashMap();
-                        ItemStack[] var19 = items;
-                        int var18 = items.length;
-
-                        for(int var17 = 0; var17 < var18; ++var17) {
-                            ItemStack item = var19[var17];
-                            if (item != null) {
-                                map.compute(item.getType(), (k, v) -> {
-                                    return v == null ? item.getAmount() : v + item.getAmount();
-                                });
-                            }
+                        Map<Material, Integer> map = new HashMap<>();
+                        byte b1;
+                        int j;
+                        ItemStack[] arrayOfItemStack1;
+                        for (j = (arrayOfItemStack1 = items).length, b1 = 0; b1 < j; ) {
+                            ItemStack item = arrayOfItemStack1[b1];
+                            if (item != null)
+                                map.compute(item.getType(), (k, v) -> (v == null) ? item.getAmount() : v + item.getAmount());
+                            b1++;
                         }
+                        for (Map.Entry<Material, Integer> e : map.entrySet())
+                            e.setValue(Integer.valueOf((int)(((Integer)e.getValue()).intValue() * odds)));
+                        List<ItemStack> result = new ArrayList<>();
+                        for (Map.Entry<Material, Integer> e : map.entrySet()) {
+                            Bukkit.broadcastMessage(this.betinfo.prefix + this.betinfo.gettype(e.getKey()) + e.getValue() + "個");
 
-                        Iterator var29 = map.entrySet().iterator();
-
-                        while(var29.hasNext()) {
-                            Map.Entry<Material, Integer> e = (Map.Entry)var29.next();
-                            e.setValue((int)((double)(Integer)e.getValue() * odds));
-                        }
-
-                        List<ItemStack> result = new ArrayList();
-                        Iterator var31 = map.entrySet().iterator();
-
-                        while(var31.hasNext()) {
-                            Map.Entry<Material, Integer> e = (Map.Entry)var31.next();
-                            Bukkit.broadcastMessage(this.betinfo.prefix + Bukkit.getOfflinePlayer((UUID)entry.getKey()).getName() + this.betinfo.gettype((Material)e.getKey()) + e.getValue());
-
-                            for(int amout = (Integer)e.getValue(); amout >= 0; amout -= 64) {
+                            int amout = ((Integer)e.getValue()).intValue();
+                            while (amout > 0) {  // 0のときにループに入らないように修正
                                 if (amout <= 64) {
-                                    result.add(new ItemStack((Material)e.getKey(), amout));
+                                    result.add(new ItemStack(e.getKey(), amout));
                                 } else {
-                                    result.add(new ItemStack((Material)e.getKey(), 64));
+                                    result.add(new ItemStack(e.getKey(), 64));
                                 }
+                                amout -= 64;
                             }
                         }
-
-                        Player player = Bukkit.getPlayer((UUID)entry.getKey());
-                        Iterator var36;
+                        Player player = Bukkit.getPlayer(entry.getKey());
                         if (player != null) {
-                            var36 = result.iterator();
-
-                            while(var36.hasNext()) {
-                                ItemStack item = (ItemStack)var36.next();
+                            for (ItemStack item : result)
                                 player.getWorld().dropItem(player.getLocation(), item);
-                            }
-                        } else {
-                            var36 = Bukkit.getOnlinePlayers().iterator();
-
-                            while(var36.hasNext()) {
-                                Player op = (Player)var36.next();
-                                if (op.isOp()) {
-                                    Iterator var21 = result.iterator();
-
-                                    while(true) {
-                                        if (!var21.hasNext()) {
-                                            continue label104;
-                                        }
-
-                                        ItemStack item = (ItemStack)var21.next();
-                                        op.getWorld().dropItem(op.getLocation(), item);
-                                    }
-                                }
+                            continue;
+                        }
+                        for (Player op : Bukkit.getOnlinePlayers()) {
+                            if (op.isOp()) {
+                                for (ItemStack item : result)
+                                    op.getWorld().dropItem(op.getLocation(), item);
+                                break;
                             }
                         }
                     }
                 }
+                Bukkit.broadcastMessage(String.valueOf(this.betinfo.prefix) + ChatColor.GOLD + message + "倍率" + odds);
+                this.betinfo.reset();
             } else {
-                sender.sendMessage(this.betinfo.prefix + ChatColor.RED + "エラー　存在しない　プレイヤー");
+                sender.sendMessage(String.valueOf(this.betinfo.prefix) + ChatColor.RED + "エラー　存在しない　プレイヤー");
             }
         } else {
             this.betinfo.toggle = !this.betinfo.toggle;
-            sender.sendMessage(this.betinfo.prefix + ChatColor.YELLOW + "賭け" + this.betinfo.toggle);
+            sender.sendMessage(String.valueOf(this.betinfo.prefix) + ChatColor.YELLOW + "賭け"+ this.betinfo.toggle);
         }
-
         return true;
     }
 
-    private Integer odds(UUID uuid) {
+    private int odds(UUID uuid) {
         int i = 0;
-        Iterator var4 = this.betinfo.bets.entrySet().iterator();
-
-        while(var4.hasNext()) {
-            Map.Entry<UUID, BetPlayer> entry = (Map.Entry)var4.next();
-            if (((BetPlayer)entry.getValue()).betto.equals(uuid)) {
-                --i;
+        for (BetPlayer betPlayer : this.betinfo.bets.values()) {
+            if (betPlayer.betto.equals(uuid)) {
+                i--;
             } else {
-                ++i;
+                i++;
             }
         }
-
-        if (i <= 1) {
-            i = 1;
-        }
-
-        return i;
+        return Math.max(i, 1);
     }
 }
